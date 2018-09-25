@@ -1,14 +1,14 @@
 <?xml version='1.0'?>
 <sdf version='1.4'>
   <model name="h-bot">
-	<static>true</static> #Change this later
+	<static>false</static> #Change this later
 	  <link name='chassis'>
             <pose>0 0 .09 0 0 0</pose>
 
             <collision name='collision'>
               <geometry>
                 <box>
-                  <size>.4 .2 .1</size>
+                  <size>.6 .4 .1</size>
                 </box>
               </geometry>
             </collision>
@@ -16,16 +16,19 @@
             <visual name='visual'>
               <geometry>
                 <box>
-                  <size>.4 .2 .1</size>
+                  <size>.6 .4 .1</size>
                 </box>
               </geometry>
             </visual>
-          <collision name='caster_collision'>
-            <pose>-0.15 0 -0.05 0 0 0</pose>
+	</link>
+	<link name="center_wheel">
+	  <pose>0 0 .05 0 1.5707 1.5707</pose>
+	   <collision name='center_wheel_collision'>
             <geometry>
-                <sphere>
+              <cylinder>
                 <radius>.05</radius>
-              </sphere>
+		<length>.05</length>
+              </cylinder>
             </geometry>
 
             <surface>
@@ -40,17 +43,18 @@
             </surface>
           </collision>
 
-          <visual name='caster_visual'>
-            <pose>-0.15 0 -0.05 0 0 0</pose>
+          <visual name='center_wheel_visual'>
+            <pose>0 0 0 0 0 1.5707</pose>
             <geometry>
-              <sphere>
+              <cylinder>
                 <radius>.05</radius>
-              </sphere>
+		<length>.05</length>
+              </cylinder>
             </geometry>
           </visual>
           </link>
-	<link name="left_wheel">
-        <pose>0.1 0.13 0.1 0 1.5707 1.5707</pose>
+	<link name="left_front_wheel">
+        <pose>-0.325 0.12 0.1 1.5707 1.5707 1.5707</pose>
         <collision name="collision">
           <geometry>
             <cylinder>
@@ -68,8 +72,8 @@
           </geometry>
         </visual>
       </link>
- 	<link name="right_wheel">
-        <pose>0.1 -0.13 0.1 0 1.5707 1.5707</pose>
+ 	<link name="right_front_wheel">
+        <pose>0.325 0.12 0.1 1.5707 1.5707 1.5707</pose>
         <collision name="collision">
           <geometry>
             <cylinder>
@@ -87,5 +91,85 @@
           </geometry>
         </visual>
       </link>
+<link name="left_rear_wheel">
+        <pose>-0.325 -0.12 0.1 1.5707 1.5707 1.5707</pose>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>.1</radius>
+              <length>.05</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>.1</radius>
+              <length>.05</length>
+            </cylinder>
+          </geometry>
+        </visual>
+      </link>
+ 	<link name="right_rear_wheel">
+        <pose>0.325 -0.12 0.1 1.5707 1.5707 1.5707</pose>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>.1</radius>
+              <length>.05</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>.1</radius>
+              <length>.05</length>
+            </cylinder>
+          </geometry>
+        </visual>
+      </link>
+      <joint type="revolute" name="left_front_wheel_hinge">
+        <pose>-.03 0 0 0 0 0</pose>
+        <child>left_front_wheel</child>
+        <parent>chassis</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+        </axis>
+      </joint>
+
+      <joint type="revolute" name="right_front_wheel_hinge">
+        <pose>.03 0 0 0 0 0</pose>
+        <child>right_front_wheel</child>
+        <parent>chassis</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+        </axis>
+      </joint>
+      <joint type="revolute" name="left_rear_wheel_hinge">
+        <pose>-.03 0 0 0 0 0</pose>
+        <child>left_rear_wheel</child>
+        <parent>chassis</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+        </axis>
+      </joint>
+
+      <joint type="revolute" name="right_rear_wheel_hinge">
+        <pose>.03 0 0 0 0 0</pose>
+        <child>right_rear_wheel</child>
+        <parent>chassis</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+        </axis>
+      </joint>
+      <joint type="revolute" name="center_wheel_hinge">
+        <pose>.03 0 0 0 0 0</pose>
+        <child>center_wheel</child>
+        <parent>chassis</parent>
+        <axis>
+          <xyz>0 1 0</xyz>
+        </axis>
+      </joint>
   </model>
 </sdf>
